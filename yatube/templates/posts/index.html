@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load cache %}
+{% load thumbnail %}
+{% block title %}Главная  {% endblock %}
+{% cache 20 content %}
+{% block content %}
+{% include 'includes/switcher.html' %}
+  {% for post in page_obj %}
+    <ul>
+      <li><h3>Автор: <a href="{% url 'post:profile' post.author.username %}">{{ post.author.get_full_name }}</a></h3></li>
+      <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
+        {% thumbnail post.image "330x339" upscale=True as im %}
+        <img class="img-thumbnail rounded float-left my-3" src="{{ im.url }}">
+        {% endthumbnail %}
+    </ul>
+    <p>{{ post.text }}</p>
+      {% if post.group %}
+        <a class="nav-link" href="{% url 'post:group' post.group.slug %}">все записи группы</a>
+      {% endif %}
+      {% if not forloop.last %}
+        <hr>
+      {% endif %}
+  {% endfor %}
+  {% include 'includes/paginator.html' %}
+{% endblock %}
+{% endcache %}

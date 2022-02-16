@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %}Посты групы {{ group.title }} {% endblock %}
+{% block content %}
+  <h1>{{ group.title }}</h1>
+  <p>{{ group.description }}</p>
+  {% for post in posts %}
+    <ul>
+      <li>
+        <h3>Автор: {{ post.author.get_full_name }}</h3></li>
+      <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
+        {% thumbnail post.image "330x339" upscale=True as im %}
+        <img class="img-thumbnail rounded float-left my-3" src="{{ im.url }}">
+        {% endthumbnail %}
+    </ul>
+    <p>{{ post.text }}</p>
+      {% if not forloop.last %}
+        <hr>
+      {% endif %}
+  {% endfor %}
+{% endblock %}
