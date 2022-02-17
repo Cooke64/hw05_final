@@ -20,6 +20,9 @@
       {% if not forloop.last %}
         <hr>
       {% endif %}
+      {% if post.pk %}
+        <a href="{% url 'post:post_detail' post.pk %}">подробная информация </a>
+      {% endif %}
   {% endfor %}
   {% include 'includes/paginator.html' %}
 {% endblock %}

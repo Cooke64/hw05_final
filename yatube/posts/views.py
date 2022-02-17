@@ -78,7 +78,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         self.post = form.save(commit=False)
         self.post.author = self.request.user
         self.post.save()
-        return redirect(f'/profile/{self.request.user}/')
+        return redirect('post:profile', username=self.request.user)
 
 
 @login_required
@@ -135,9 +135,8 @@ def follow_index(request):
 def profile_follow(request, username):
     # Подписаться на автора.
     follow = get_object_or_404(User, username=username)
-    if follow != request.user:
-        # При True создает объект в бд или достает автора,
-        # на которого можно подписаться
+    is_exist = Follow.objects.filter(user=request.user, author=follow).exists()
+    if follow != request.user and not is_exist:
         Follow.objects.get_or_create(
             user=request.user,
             author=follow
