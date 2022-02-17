@@ -9,6 +9,7 @@ class PostAdmin(admin.ModelAdmin):
         'text',
         'author',
         'group',
+        'pub_date'
     )
     list_editable = ('group',)
     empty_value_display = '-пусто-'
