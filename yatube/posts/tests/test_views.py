@@ -106,9 +106,9 @@ class ViewsTests(TestCase):
             self.post.id: first_object.id,
             self.post.image: first_object.image,
         }
-        for reverse_name, response_name in context_objects.items():
-            with self.subTest(reverse_name=reverse_name):
-                self.assertEqual(response_name, reverse_name)
+        for value, expected in context_objects.items():
+            with self.subTest(reverse_name=value):
+                self.assertEqual(expected, value)
 
     def test_post_posts_groups_page_show_correct_context(self):
         """Проверяем Context страницы posts_groups"""
@@ -122,9 +122,9 @@ class ViewsTests(TestCase):
             self.post.id: first_object.id,
             self.post.image: first_object.image,
         }
-        for reverse_name, response_name in context_objects.items():
-            with self.subTest(reverse_name=reverse_name):
-                self.assertEqual(response_name, reverse_name)
+        for value, expected in context_objects.items():
+            with self.subTest(reverse_name=value):
+                self.assertEqual(expected, value)
 
     def test_post_profile_page_show_correct_context(self):
         """Проверяем Context страницы profile"""
@@ -138,9 +138,9 @@ class ViewsTests(TestCase):
             self.post.id: first_object.id,
             self.post.image: first_object.image,
         }
-        for reverse_name, response_name in context_objects.items():
-            with self.subTest(reverse_name=reverse_name):
-                self.assertEqual(response_name, reverse_name)
+        for value, expected in context_objects.items():
+            with self.subTest(reverse_name=value):
+                self.assertEqual(expected, value)
 
     def test_create_page_show_correct_context(self):
         """Шаблон post_create сформирован с правильным контекстом."""
@@ -197,22 +197,6 @@ class ViewsTests(TestCase):
         cache.clear()
         posts_count = Post.objects.count()
         self.assertEqual(len(response.context['page_obj']), posts_count)
-
-    def test_comment_make_only_one_item(self):
-        """в базе создается объект comment и только один"""
-        self.assertTrue(
-            Comment.objects.filter(
-                post=self.post,
-                author=self.user,
-                text='Тестовый текст'
-            ).exists
-        )
-        response = Comment.objects.filter(
-            post=self.post,
-            author=self.user,
-            text='Тестовый текст'
-        ).count()
-        self.assertEqual(response, 1)
 
     def test_comment_context_of_post_detail_is_correct(self):
         """Шаблон post_detail сформирован с правильными комментариями"""

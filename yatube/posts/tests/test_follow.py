@@ -83,7 +83,6 @@ class FollowTest(TestCase):
 
     def test_authorized_user_can_follow(self):
         """Авторизованный пользователь может подписаться на автора."""
-
         self.authorize_client.get(reverse(
             'post:profile_follow',
             kwargs={'username': self.author}))

@@ -54,7 +54,7 @@ class PostFormTest(TestCase):
         shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def test_form_create(self):
-        """Валидная форма создает пост."""
+        """Авторизованный пользователь создает пост."""
         post_count = Post.objects.count()
         form_data = {
             'text': PostFormTest.post.text,
